@@ -1,4 +1,4 @@
-from trie import Trie 
+from .trie import Trie
 
 class Gazetteer:
     def __init__(self, lower):
@@ -16,9 +16,9 @@ class Gazetteer:
 
     def insert(self, word_list, source):
         if self.lower:
-            word_list = [word.lower() for word in word_list]
-        self.trie.insert(word_list)
-        string = self.space.join(word_list)
+            word_list = [str(word.lower()) for word in word_list]
+        self.trie.insert([str(w) for w in word_list])
+        string = self.space.join([str(w) for w in word_list])
         if string not in self.ent2type:
             self.ent2type[string] = source
         if string not in self.ent2id:
@@ -38,7 +38,7 @@ class Gazetteer:
         string = self.space.join(word_list)
         if string in self.ent2type:
             return self.ent2type[string]
-        print  "Error in finding entity type at gazetteer.py, exit program! String:", string
+        print("Error in finding entity type at gazetteer.py, exit program! String:", string)
         exit(0)
 
     def size(self):
